@@ -10,6 +10,14 @@ void print_menu(){
     printf("3) Hard\n"); // 2 wrong
     printf(">> ");
 }
+// print loss statistics
+void print_loss(char* word){
+    printf("-------------------------\n");
+    printf("You Lose! Try Again.\n");
+    printf("Correct word: %s\n", word);
+    printf("-------------------------\n");
+}
+
 // prints history of past guesses
 void print_past(char* past){
     int length = strlen(past);
@@ -31,15 +39,19 @@ void print_past(char* past){
     if(length == 0){
        printf("\n"); 
     }
-    
 }
 // prints hidden word in easy to view format
 void print_hidden(char* hidden){
     // print updated word
-    printf("----------------\n");
-    printf("%s\n",hidden); 
-    printf("----------------\n");
+    // printf("----------------\n");
+    // printf("%s\n",hidden); 
+    // printf("----------------\n");
     // print word with spacing
+    printf("-------------------------\n");
+    for(int i = 0; i < strlen(hidden); i++){
+        printf("%c ", hidden[i]);
+    }
+    printf("\n-------------------------\n");
 }
 int repeat_guess(char* letter, char* past, char* past_right){
     int length_wrong = strlen(past);
@@ -179,7 +191,7 @@ int main(int argc, char *argv[])
     // handle game termination
     if(max_wrong == num_wrong){
         // losing game
-        printf("You Lose! Try Again.\n");
+        print_loss(word);
     }
     else{
         // winning game
