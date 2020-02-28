@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +23,8 @@ int main(int argc, char *argv[])
     // loop through file to find corresponding word
     for(int i = 0; i <= index; i++){
         fscanf(file, "%s", c);
-       // printf("%s", c);
     }
-
+    printf("Chosen word is: %s\n", c);
+    int length = strlen(c);
+    printf("Length: %d\n", length);
 }
