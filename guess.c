@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
     printf("1) Easy\n"); // 8 wrong
     printf("2) Medium\n"); // 5 wrong
     printf("3) Hard\n"); // 2 wrong
-    printf("...");
+    printf(">>");
     int max_wrong = 5; // max wrong guesses
     int level = 0; // holds chosen difficulty 
     scanf("%d", &level); // reads user input
