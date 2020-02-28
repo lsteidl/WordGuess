@@ -13,14 +13,19 @@ void print_menu(){
 // prints history of past guesses
 void print_past(char* past){
     int length = strlen(past);
+    printf("LEN = %d\n", length);
     // loop through each past input
+    //
+    printf("Previous Guesses: ");
+    
     for(int i = 0; i < length; i++){
         // handle final punctuation
         if(i < (length - 1)){
             printf("%c, ", past[i]);
         }
-        else{
-            printf("%c", past[i]);
+        else{ 
+            // print last char
+            printf("%c\n", past[i]);
         }
     }
 }
@@ -129,6 +134,7 @@ int main(int argc, char *argv[])
     int num_correct = 0; // correct guesses
     int num_wrong = 0; // total wrong guesses
     char past[64]; // holds past incorrect guesses
+    past[0] = '\0'; // avoid unexpected array values 
     char letter = '\0'; // make room for user char guess
     // repeatedly prompt user for guess input
     while(( max_wrong > num_wrong ) && ( num_correct < length ) ){
