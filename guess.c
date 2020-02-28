@@ -38,11 +38,19 @@ void print_past(char* past){
     }
 }
 // print border line
-void print_boarder(int length){
+void print_boarder(int length, int second){
         // print border line of varying length
-    for(int i = 0; i < length; i++){
-        printf("--");
-        if(i == (length - 1)){
+    for(int i = 0; i < length+3; i++){
+        if(second && i == 0){
+           printf("\n --"); 
+        }
+        else if(i == 0){
+            printf(" --");
+        }
+        else{
+            printf("--"); 
+        }
+        if(i == (length+3 -1)){
             printf("\n");
         }
     }
@@ -53,13 +61,15 @@ void print_hidden(char* hidden){
     // print updated word
     // print word with spacing
     // print border line of varying length
-    print_boarder(length);
+    print_boarder(length, 0);
     // print word with spaces
+    printf("|   ");
     for(int i = 0; i < length; i++){
         printf("%c ", hidden[i]);
     }
+    printf("  |");
     // print border line of varying length
-    print_boarder(length);
+    print_boarder(length, 1);
 }
 int repeat_guess(char* letter, char* past, char* past_right){
     int length_wrong = strlen(past);
