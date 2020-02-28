@@ -2,7 +2,18 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+// displays menu to screen
+void print_menu(){
+    printf("Select Difficulty...\n");
+    printf("1) Easy\n"); // 8 wrong
+    printf("2) Medium\n"); // 5 wrong
+    printf("3) Hard\n"); // 2 wrong
+    printf(">>");
+}
+// prints history of past guesses
+void print_past(char* past){
 
+}
 // prints hidden word in easy to view format
 void print_hidden(char* hidden){
     // print updated word
@@ -80,11 +91,8 @@ int main(int argc, char *argv[])
         }
     }
     // prompt user for difficulty level
-    printf("Select Difficulty...\n");
-    printf("1) Easy\n"); // 8 wrong
-    printf("2) Medium\n"); // 5 wrong
-    printf("3) Hard\n"); // 2 wrong
-    printf(">>");
+    //
+    print_menu();
     int max_wrong = 5; // max wrong guesses
     int level = 0; // holds chosen difficulty 
     scanf("%d", &level); // reads user input
