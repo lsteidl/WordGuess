@@ -13,10 +13,10 @@ void print_menu(){
 // prints history of past guesses
 void print_past(char* past){
     int length = strlen(past);
-    printf("LEN = %d\n", length);
+    //printf("LEN = %d\n", length);
     // loop through each past input
     //
-    printf("Previous Guesses: ");
+    printf("Previous Wrong Guesses: ");
     
     for(int i = 0; i < length; i++){
         // handle final punctuation
@@ -39,6 +39,7 @@ void print_hidden(char* hidden){
     printf("----------------\n");
     printf("%s\n",hidden); 
     printf("----------------\n");
+    // print word with spacing
 }
 int repeat_guess(char* letter, char* past, char* past_right){
     int length_wrong = strlen(past);
@@ -77,13 +78,13 @@ int guess(char* hidden, char* word, char* letter, int *length,
         past[*num_wrong] = *letter; // add letter to list of past wrong guesses
         past[(*num_wrong)+1] = '\0'; // mark end 
         *num_wrong += 1; // increment wrong count
-        printf("Wrong!");
+        printf("\nWrong!");
         
     }
     else if(match == 1){
         past_right[*num_wrong] = *letter; // add letter to list of past right
         past_right[(*num_wrong)+1] = '\0'; // mark end
-        printf("Correct!");
+        printf("\nCorrect!");
     }
     printf(" - %d incorrect guesses left\n", *max_wrong-*num_wrong);
     // print updated word
