@@ -3,6 +3,12 @@
 #include <time.h>
 #include <string.h>
 
+void print_hidden(char* hidden){
+    // print updated word
+    printf("----------------\n");
+    printf("%s\n",hidden); 
+    printf("----------------\n");
+}
 int guess(char* hidden, char* word, char* letter, int *length, int *num_correct, int *num_wrong){
     int match = 0; // false unless guess is a match
     for(int i = 0; i < *length; i++){
@@ -20,9 +26,7 @@ int guess(char* hidden, char* word, char* letter, int *length, int *num_correct,
         printf("Correct!\n");
     }
     // print updated word
-    printf("----------------\n");
-    printf("%s\n",hidden); 
-    printf("----------------\n");
+    print_hidden(hidden);
     // return 0 if solved
     if(*num_correct == *length){
         return 0;
@@ -59,8 +63,8 @@ int main(int argc, char *argv[])
     int length = strlen(word);
     printf("Length: %d\n", length);
 
-    //char *hidden = NULL; // holds "hidden word"
     char hidden[length]; // holds "hidden word"
+    // fill hidden word with blanks
     for (int i = 0; i <= length; i++)
     {
         hidden[i] = '*';
@@ -70,7 +74,7 @@ int main(int argc, char *argv[])
             hidden[i] = '\0';
         }
     }
-    printf("%s\n", hidden);
+    print_hidden(hidden); // display hidden word
     int num_correct = 0; // correct guesses
     int num_wrong = 0; // total wrong guesses
     int max_guesses = 3; // max wrong guesses
