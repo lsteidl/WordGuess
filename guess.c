@@ -37,32 +37,29 @@ void print_past(char* past){
        printf("\n"); 
     }
 }
+// print border line
+void print_boarder(int length){
+        // print border line of varying length
+    for(int i = 0; i < length; i++){
+        printf("--");
+        if(i == (length - 1)){
+            printf("\n");
+        }
+    }
+}
 // prints hidden word in easy to view format
 void print_hidden(char* hidden){
     int length = strlen(hidden);
     // print updated word
     // print word with spacing
     // print border line of varying length
-    for(int i = 0; i < length; i++){
-        printf("--");
-        if(i == (length - 1)){
-            printf("\n");
-        }
-    }
+    print_boarder(length);
     // print word with spaces
     for(int i = 0; i < length; i++){
         printf("%c ", hidden[i]);
     }
     // print border line of varying length
-    for(int i = 0; i < length; i++){
-        if(i == 0){
-            printf("\n");
-        }
-        printf("--");
-        if(i == (length - 1)){
-            printf("\n");
-        }
-    }
+    print_boarder(length);
 }
 int repeat_guess(char* letter, char* past, char* past_right){
     int length_wrong = strlen(past);
