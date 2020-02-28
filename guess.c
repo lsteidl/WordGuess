@@ -3,6 +3,25 @@
 #include <time.h>
 #include <string.h>
 
+int guess(char* hidden, char* word, char* letter, int *length){
+    printf("guess works\n");
+    int match = 0; // false unless guess is a match
+    for(int i = 0; i < *length; i++){
+        if(word[i] == *letter){
+            match = 1;
+            hidden[i] = *letter;
+        }
+    }
+    if(!match){
+        printf("Wrong!\n");
+    }
+    else{
+        printf("Correct\n");
+    }
+    printf("%s\n",hidden); 
+
+    return 0;
+}
 int main(int argc, char *argv[])
 {
     char word[64]; // holds word retrieved from file
@@ -29,6 +48,7 @@ int main(int argc, char *argv[])
     int length = strlen(word);
     printf("Length: %d\n", length);
 
+    //char *hidden = NULL; // holds "hidden word"
     char hidden[length]; // holds "hidden word"
     for (int i = 0; i <= length; i++)
     {
@@ -47,5 +67,8 @@ int main(int argc, char *argv[])
     printf("Enter letter guess:  ");
     scanf("%c", &letter); // reads user input
     printf("input is %c\n", letter);
-    
+    guess(hidden, word, &letter, &length);
+
+
 }
+
