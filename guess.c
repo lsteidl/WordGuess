@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
-int main(char *argc, char *argv[])
+int main(int argc, char *argv[])
 {
     char c[64]; // holds word retrieved from file
     // open file for reading
@@ -14,10 +16,13 @@ int main(char *argc, char *argv[])
     // choose random number, used to select word
     // choose index 1-58109
     int index;
-    index = 12;
+    srand ( time(NULL) ); // seed with time
+    index = (rand() % 58108) + 1; // 1-58109
+    printf("%d\n",index); // display chosen number
     // loop through file to find corresponding word
     for(int i = 0; i <= index; i++){
         fscanf(file, "%s", c);
-        printf("%s", c);
+       // printf("%s", c);
     }
+
 }
