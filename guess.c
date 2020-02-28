@@ -21,11 +21,9 @@ void print_loss(char* word){
 // prints history of past guesses
 void print_past(char* past){
     int length = strlen(past);
-    //printf("LEN = %d\n", length);
-    // loop through each past input
-    //
+
     printf("Previous Wrong Guesses: ");
-    
+    // loop through each past input
     for(int i = 0; i < length; i++){
         // handle final punctuation
         if(i < (length - 1)){
@@ -42,16 +40,30 @@ void print_past(char* past){
 }
 // prints hidden word in easy to view format
 void print_hidden(char* hidden){
+    int length = strlen(hidden);
     // print updated word
-    // printf("----------------\n");
-    // printf("%s\n",hidden); 
-    // printf("----------------\n");
     // print word with spacing
-    printf("-------------------------\n");
-    for(int i = 0; i < strlen(hidden); i++){
+    // print border line of varying length
+    for(int i = 0; i < length; i++){
+        printf("--");
+        if(i == (length - 1)){
+            printf("\n");
+        }
+    }
+    // print word with spaces
+    for(int i = 0; i < length; i++){
         printf("%c ", hidden[i]);
     }
-    printf("\n-------------------------\n");
+    // print border line of varying length
+    for(int i = 0; i < length; i++){
+        if(i == 0){
+            printf("\n");
+        }
+        printf("--");
+        if(i == (length - 1)){
+            printf("\n");
+        }
+    }
 }
 int repeat_guess(char* letter, char* past, char* past_right){
     int length_wrong = strlen(past);
@@ -83,7 +95,6 @@ int guess(char* hidden, char* word, char* letter, int *length,
         if(word[i] == *letter){
             match = 1;
             hidden[i] = *letter;
-            *num_correct += 1; // increment correct count
         }
     }
     if(match == 0){
@@ -94,6 +105,7 @@ int guess(char* hidden, char* word, char* letter, int *length,
         
     }
     else if(match == 1){
+        *num_correct += 1; // increment correct count
         past_right[*num_wrong] = *letter; // add letter to list of past right
         past_right[(*num_wrong)+1] = '\0'; // mark end
         printf("\nCorrect!");
