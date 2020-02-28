@@ -12,7 +12,7 @@ void print_hidden(char* hidden){
 }
 // handles user letter guess, 
 //updates num_correct, num_wrong and hidden word
-int guess(char* hidden, char* word, char* letter, int *length, int *num_correct, int *num_wrong){
+int guess(char* hidden, char* word, char* letter, int *length, int *num_correct, int *num_wrong, int *max_wrong){
     int match = 0; // false unless guess is a match
     for(int i = 0; i < *length; i++){
         if(word[i] == *letter){
@@ -23,11 +23,12 @@ int guess(char* hidden, char* word, char* letter, int *length, int *num_correct,
     }
     if(!match){
         *num_wrong += 1; // increment wrong count
-        printf("Wrong!\n");
+        printf("Wrong!");
     }
     else{
-        printf("Correct!\n");
+        printf("Correct!");
     }
+    printf(" - %d incorrect guesses left\n", *max_wrong-*num_wrong);
     // print updated word
     print_hidden(hidden);
     // return 0 if solved
@@ -84,21 +85,21 @@ int main(int argc, char *argv[])
     printf("2) Medium\n"); // 5 wrong
     printf("3) Hard\n"); // 2 wrong
     printf("...");
-    int max_guesses = 5; // max wrong guesses
+    int max_wrong = 5; // max wrong guesses
     int level = 0; // holds chosen difficulty 
     scanf("%d", &level); // reads user input
     while ( getchar() != '\n' ); // clear ENTER key from buffer
     if(level == 1){
         printf("You chose Easy. 8 Wrong guesses allowed.\n");
-        max_guesses = 8;
+        max_wrong = 8;
     }
     else if(level == 2){
         printf("You chose Medium. 5 Wrong guesses allowed.\n");
-        max_guesses = 5;
+        max_wrong = 5;
     }
     else if(level == 3){
         printf("You chose Hard. 2 Wrong guesses allowed.\n");
-        max_guesses = 2;
+        max_wrong = 2;
     }
 
     print_hidden(hidden); // display hidden word
@@ -107,16 +108,16 @@ int main(int argc, char *argv[])
     
     char letter = '\0'; // make room for user char guess
     // repeatedly prompt user for guess input
-    while(( max_guesses > num_wrong ) && ( num_correct < length ) ){
+    while(( max_wrong > num_wrong ) && ( num_correct < length ) ){
         printf("Enter letter guess:  ");
         letter = '\0';
         scanf("%c", &letter); // reads user input
-        guess(hidden, word, &letter, &length, &num_correct, &num_wrong);
+        guess(hidden, word, &letter, &length, &num_correct, &num_wrong, &max_wrong);
         while ( getchar() != '\n' ); // clear ENTER key from buffer
     }
 
     // handle game termination
-    if(max_guesses == num_wrong){
+    if(max_wrong == num_wrong){
         // losing game
         printf("You Lose! Try Again.\n");
     }
