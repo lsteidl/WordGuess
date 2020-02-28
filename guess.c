@@ -21,8 +21,7 @@ void print_loss(char* word){
 // prints history of past guesses
 void print_past(char* past){
     int length = strlen(past);
-
-    printf("Previous Wrong Guesses: ");
+    //printf("Previous Wrong Guesses: ");
     // loop through each past input
     for(int i = 0; i < length; i++){
         // handle final punctuation
@@ -83,7 +82,7 @@ int repeat_guess(char* letter, char* past, char* past_right){
 }
 // handles user letter guess, 
 //updates num_correct, num_wrong and hidden word
-int guess(char* hidden, char* word, char* letter, int *length, 
+int guess(char* hidden, char* word, char* letter, int *length, int *correct_guesses,
             int *num_correct, int *num_wrong, int *max_wrong, char* past, char* past_right){
     int match = 0; // false unless guess is a match
     for(int i = 0; i < *length; i++){
@@ -95,6 +94,7 @@ int guess(char* hidden, char* word, char* letter, int *length,
         if(word[i] == *letter){
             match = 1;
             hidden[i] = *letter;
+            *num_correct += 1; // increment correct count
         }
     }
     if(match == 0){
@@ -105,16 +105,20 @@ int guess(char* hidden, char* word, char* letter, int *length,
         
     }
     else if(match == 1){
-        *num_correct += 1; // increment correct count
-        past_right[*num_wrong] = *letter; // add letter to list of past right
-        past_right[(*num_wrong)+1] = '\0'; // mark end
+        past_right[*correct_guesses] = *letter; // add letter to list of past right
+        past_right[(*correct_guesses)+1] = '\0'; // mark end
+        *correct_guesses += 1;
         printf("\nCorrect!");
     }
     printf(" - %d incorrect guesses left\n", *max_wrong-*num_wrong);
     // print updated word
     print_hidden(hidden);
     // print updated wrong guesses
+    printf("Previous Wrong Guesses: ");
     print_past(past);
+    //print update correct guesses
+    printf("Previous Correct Guesses: ");
+    print_past(past_right);
     // return 0 if solved
     if(*num_correct == *length){
         return 0;
@@ -184,7 +188,8 @@ int main(int argc, char *argv[])
     }
 
     print_hidden(hidden); // display hidden word
-    int num_correct = 0; // correct guesses
+    int correct_guesses = 0; // correct guesses made
+    int num_correct = 0; // correct letters found
     int num_wrong = 0; // total wrong guesses
     char past[64]; // holds past incorrect guesses
     past[0] = '\0'; // avoid unexpected array values 
@@ -196,7 +201,7 @@ int main(int argc, char *argv[])
         printf("Enter letter guess:  ");
         letter = '\0';
         scanf("%c", &letter); // reads user input
-        guess(hidden, word, &letter, &length, &num_correct, &num_wrong, &max_wrong, past, past_right);
+        guess(hidden, word, &letter, &length, &correct_guesses, &num_correct, &num_wrong, &max_wrong, past, past_right);
         while ( getchar() != '\n' ); // clear ENTER key from buffer
     }
 
@@ -207,6 +212,7 @@ int main(int argc, char *argv[])
     }
     else{
         // winning game
+        printf("max wrong == %d, num_wrong == %d\n", max_wrong, num_wrong);
         printf("You Win. Congratulations!\n");
 
     }
