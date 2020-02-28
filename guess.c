@@ -3,21 +3,23 @@
 #include <time.h>
 #include <string.h>
 
-int guess(char* hidden, char* word, char* letter, int *length, int *num_correct){
+int guess(char* hidden, char* word, char* letter, int *length, int *num_correct, int *num_wrong){
     int match = 0; // false unless guess is a match
     for(int i = 0; i < *length; i++){
         if(word[i] == *letter){
             match = 1;
             hidden[i] = *letter;
-            *num_correct += 1;
+            *num_correct += 1; // increment correct count
         }
     }
     if(!match){
+        *num_wrong += 1; // increment wrong count
         printf("Wrong!\n");
     }
     else{
         printf("Correct!\n");
     }
+    // print updated word
     printf("----------------\n");
     printf("%s\n",hidden); 
     printf("----------------\n");
@@ -69,25 +71,30 @@ int main(int argc, char *argv[])
         }
     }
     printf("%s\n", hidden);
-    int num_correct = 0;
-    int num_guesses = 0;
-    int max_guesses = 3;
+    int num_correct = 0; // correct guesses
+    int num_wrong = 0; // total wrong guesses
+    int max_guesses = 3; // max wrong guesses
     char letter = '\0';
-    // first user guess input
-    while(max_guesses != num_guesses){
+    // repeatedly prompt user for guess input
+    while(( max_guesses > num_wrong ) && ( num_correct < length ) ){
         printf("Enter letter guess:  ");
         letter = '\0';
         scanf("%c", &letter); // reads user input
         printf("input is %c\n", letter);
-        guess(hidden, word, &letter, &length, &num_correct);
+        guess(hidden, word, &letter, &length, &num_correct, &num_wrong);
         while ( getchar() != '\n' ); // clear ENTER key from buffer
     }
-    // while( guess(hidden, word, &letter, &length, &num_correct) ){
-    //     printf("Enter letter guess:  ");
-    //     scanf("%c", &letter); // reads user input
-    //     printf("input is %c\n", letter);
-    // }
-        
+
+    // handle game termination
+    if(max_guesses == num_wrong){
+        // losing game
+        printf("You Lose! Try Again.\n");
+    }
+    else{
+        // winning game
+        printf("You Win! Congratulations\n");
+
+    }
     
 
 
