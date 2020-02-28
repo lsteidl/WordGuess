@@ -38,10 +38,11 @@ void print_past(char* past){
     }
 }
 // print border line
-void print_boarder(int length, int second){
+// second argument specifies whether top or bottom border is printing
+void print_boarder(int length, int bottom){
         // print border line of varying length
     for(int i = 0; i < length+3; i++){
-        if(second && i == 0){
+        if(bottom && i == 0){
            printf("\n --"); 
         }
         else if(i == 0){
@@ -107,6 +108,7 @@ int guess(char* hidden, char* word, char* letter, int *length, int *correct_gues
             *num_correct += 1; // increment correct count
         }
     }
+    // no match found
     if(match == 0){
         past[*num_wrong] = *letter; // add letter to list of past wrong guesses
         past[(*num_wrong)+1] = '\0'; // mark end 
@@ -114,13 +116,20 @@ int guess(char* hidden, char* word, char* letter, int *length, int *correct_gues
         printf("\nWrong!");
         
     }
+    // match found
     else if(match == 1){
         past_right[*correct_guesses] = *letter; // add letter to list of past right
         past_right[(*correct_guesses)+1] = '\0'; // mark end
         *correct_guesses += 1;
         printf("\nCorrect!");
     }
-    printf(" - %d incorrect guesses left\n", *max_wrong-*num_wrong);
+    int left = *max_wrong-*num_wrong; // number of guesses left
+    if(left == 1){
+        printf(" - %d incorrect guess left\n", left);
+    }
+    else{
+        printf(" - %d incorrect guesses left\n", left);
+    }
     // print updated word
     print_hidden(hidden);
     // print updated wrong guesses
@@ -214,7 +223,6 @@ int main(int argc, char *argv[])
         guess(hidden, word, &letter, &length, &correct_guesses, &num_correct, &num_wrong, &max_wrong, past, past_right);
         while ( getchar() != '\n' ); // clear ENTER key from buffer
     }
-
     // handle game termination
     if(max_wrong == num_wrong){
         // losing game
@@ -222,7 +230,7 @@ int main(int argc, char *argv[])
     }
     else{
         // winning game
-        printf("max wrong == %d, num_wrong == %d\n", max_wrong, num_wrong);
+        //printf("max wrong == %d, num_wrong == %d\n", max_wrong, num_wrong);
         printf("You Win. Congratulations!\n");
 
     }
