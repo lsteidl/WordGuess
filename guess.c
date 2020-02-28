@@ -3,24 +3,33 @@
 #include <time.h>
 #include <string.h>
 
-int guess(char* hidden, char* word, char* letter, int *length){
-    printf("guess works\n");
+int guess(char* hidden, char* word, char* letter, int *length, int *num_correct){
     int match = 0; // false unless guess is a match
     for(int i = 0; i < *length; i++){
         if(word[i] == *letter){
             match = 1;
             hidden[i] = *letter;
+            *num_correct += 1;
         }
     }
     if(!match){
         printf("Wrong!\n");
     }
     else{
-        printf("Correct\n");
+        printf("Correct!\n");
     }
+    printf("----------------\n");
     printf("%s\n",hidden); 
-
-    return 0;
+    printf("----------------\n");
+    // return 0 if solved
+    if(*num_correct == *length){
+        return 0;
+    }
+    // return 1 if all blanks have been guessed
+    else{
+        return 1;
+    }
+    
 }
 int main(int argc, char *argv[])
 {
@@ -35,7 +44,7 @@ int main(int argc, char *argv[])
     }
     // choose random number, used to select word
     // choose index 1-58109
-    int index;
+    int index; //  chosen random index
     srand(time(NULL));            // seed with time
     index = (rand() % 58108) + 1; // 1-58109
     printf("%d\n", index);        // display chosen number
@@ -60,14 +69,26 @@ int main(int argc, char *argv[])
         }
     }
     printf("%s\n", hidden);
-
-    // get user guess input
-    //char *line = NULL;
+    int num_correct = 0;
+    int num_guesses = 0;
+    int max_guesses = 3;
     char letter = '\0';
-    printf("Enter letter guess:  ");
-    scanf("%c", &letter); // reads user input
-    printf("input is %c\n", letter);
-    guess(hidden, word, &letter, &length);
+    // first user guess input
+    while(max_guesses != num_guesses){
+        printf("Enter letter guess:  ");
+        letter = '\0';
+        scanf("%c", &letter); // reads user input
+        printf("input is %c\n", letter);
+        guess(hidden, word, &letter, &length, &num_correct);
+        while ( getchar() != '\n' ); // clear ENTER key from buffer
+    }
+    // while( guess(hidden, word, &letter, &length, &num_correct) ){
+    //     printf("Enter letter guess:  ");
+    //     scanf("%c", &letter); // reads user input
+    //     printf("input is %c\n", letter);
+    // }
+        
+    
 
 
 }
