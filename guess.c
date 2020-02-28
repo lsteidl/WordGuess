@@ -47,6 +47,9 @@ void print_boarder(int length, int second){
         else if(i == 0){
             printf(" --");
         }
+        else if(i == length+3 -2){
+            printf("-");
+        }
         else{
             printf("--"); 
         }
